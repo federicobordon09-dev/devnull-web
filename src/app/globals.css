@@ -1,0 +1,43 @@
+@import "tailwindcss";
+
+:root {
+  --color-canvas: #0D0D0D;
+  --color-surface1: #141414;
+  --color-surface2: #1A1A1A;
+  --color-border: #2A2A2A;
+  --color-text: #F2F2F2;
+  --color-sec: #8A8A8A;
+  --color-ghost: #4A4A4A;
+}
+
+@theme inline {
+  --color-canvas: var(--color-canvas);
+  --color-surface1: var(--color-surface1);
+  --color-surface2: var(--color-surface2);
+  --color-border: var(--color-border);
+  --color-text: var(--color-text);
+  --color-sec: var(--color-sec);
+  --color-ghost: var(--color-ghost);
+  --font-sans: var(--font-inter), sans-serif;
+  --font-mono: var(--font-mono), monospace;
+}
+
+* {
+  border-radius: 0 !important;
+}
+
+/* Custom Cursor Animation */
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+.animate-blink {
+  animation: blink 1s infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-blink {
+    animation: none;
+  }
+}
