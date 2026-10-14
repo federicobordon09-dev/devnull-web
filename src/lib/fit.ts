@@ -9,6 +9,8 @@ export interface FitInput {
 export interface FitResult {
   talleRecomendado: string | null;
   error?: string;
+  /** Campo de entrada que produjo el error de validación (para aria-invalid). */
+  errorField?: "altura" | "peso";
 }
 
 export function recomendarTalle(input: FitInput, product: Product): FitResult {
@@ -19,11 +21,11 @@ export function recomendarTalle(input: FitInput, product: Product): FitResult {
   }
 
   if (alturaCm < 140 || alturaCm > 210) {
-    return { talleRecomendado: null, error: "// ERROR: altura fuera de rango (140–210 cm)" };
+    return { talleRecomendado: null, error: "// ERROR: altura fuera de rango (140–210 cm)", errorField: "altura" };
   }
 
   if (pesoKg && (pesoKg < 40 || pesoKg > 150)) {
-    return { talleRecomendado: null, error: "// ERROR: peso fuera de rango (40–150 kg)" };
+    return { talleRecomendado: null, error: "// ERROR: peso fuera de rango (40–150 kg)", errorField: "peso" };
   }
 
   // Heurística DEMO basada en altura y peso aproximado

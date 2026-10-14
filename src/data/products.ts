@@ -11,6 +11,8 @@ export interface SizingRow {
   measureC: number;
   measureD: number;
   stock: number;
+  /** Rango de altura orientativo que se muestra en la columna RECOMENDACIÓN del modal. */
+  recommendedHeight: string;
 }
 
 export interface ProductGalleryImage {
@@ -47,9 +49,13 @@ export interface Product {
   galleryMeta: ProductGalleryMeta;
   specs: ProductSpecRow[];
   sizingColumns: [string, string, string, string];
+  /** Encabezados técnicos (en) que usa la tabla del modal de medidas. */
+  sizingColumnsModal: [string, string, string, string];
   sizingRows: SizingRow[];
   fitNote: string;
   logistics: string[];
+  /** Tres pasos de medición mostrados en el modal, adaptados al tipo de prenda. */
+  measurementInstructions: { title: string; body: string }[];
   terminalPath: string;
   specFile: string;
   buildHash: string;
@@ -108,18 +114,24 @@ export const PRODUCTS: Product[] = [
       { code: "08", label: "MANUFACTURA", value: "Confeccionado éticamente en Buenos Aires, Arg." }
     ],
     sizingColumns: ["ANCHO DE PECHO (A)", "LARGO TOTAL (B)", "MANGA DESDE CUELLO (C)", "HOMBRO A HOMBRO (D)"],
+    sizingColumnsModal: ["CHEST (A)", "LENGTH (B)", "SLEEVE (C)", "SHOULDER (D)"],
     sizingRows: [
-      { size: "S", measureA: 60, measureB: 68, measureC: 78, measureD: 56, stock: 2 },
-      { size: "M", measureA: 63, measureB: 71, measureC: 80, measureD: 59, stock: 5 },
-      { size: "L", measureA: 66, measureB: 74, measureC: 82, measureD: 62, stock: 4 },
-      { size: "XL", measureA: 69, measureB: 77, measureC: 84, measureD: 65, stock: 3 },
-      { size: "XXL", measureA: 72, measureB: 80, measureC: 86, measureD: 68, stock: 1 }
+      { size: "S", measureA: 60, measureB: 68, measureC: 78, measureD: 56, stock: 2, recommendedHeight: "Altura 1.65 – 1.74m" },
+      { size: "M", measureA: 63, measureB: 71, measureC: 80, measureD: 59, stock: 5, recommendedHeight: "Altura 1.74 – 1.82m" },
+      { size: "L", measureA: 66, measureB: 74, measureC: 82, measureD: 62, stock: 4, recommendedHeight: "Altura 1.82 – 1.89m" },
+      { size: "XL", measureA: 69, measureB: 77, measureC: 84, measureD: 65, stock: 3, recommendedHeight: "Altura 1.89 – 1.95m" },
+      { size: "XXL", measureA: 72, measureB: 80, measureC: 86, measureD: 68, stock: 1, recommendedHeight: "Altura 1.95m+" }
     ],
     fitNote: "Oversize natural cuadrado. Si preferís calce regular ajustado, optá por 1 talle menos.",
     logistics: [
       "Despacho en 24-48hs hábiles a toda la República Argentina.",
       "30 días para cambios sin fricción o costo logístico en primera gestión.",
       "Confección de alta densidad testeada en laboratorio contra encogimiento térmico."
+    ],
+    measurementInstructions: [
+      { title: "Superficie Plana", body: "Colocá una sudadera que te quede cómoda completamente extendida sobre una superficie plana." },
+      { title: "Medición de Ancho", body: "Medí el ancho de pecho 2.5 cm por debajo de la sisa de axila a axila de extremo a extremo." },
+      { title: "Cotejo con la Matriz", body: "Compará tus medidas con la fila de tu talle: el ancho (A) debe quedar holgado y el largo (B) a la altura de la cadera para el calce boxy." }
     ],
     terminalPath: "root@devnull:~/store/drop_01/hoodie $",
     specFile: "cat root_hoodie.spec",
@@ -184,18 +196,24 @@ export const PRODUCTS: Product[] = [
       { code: "08", label: "MANUFACTURA", value: "Confeccionado éticamente en Buenos Aires, Arg." }
     ],
     sizingColumns: ["ANCHO DE PECHO (A)", "LARGO TOTAL (B)", "MANGA DESDE CUELLO (C)", "HOMBRO A HOMBRO (D)"],
+    sizingColumnsModal: ["CHEST (A)", "LENGTH (B)", "SLEEVE (C)", "SHOULDER (D)"],
     sizingRows: [
-      { size: "S", measureA: 52, measureB: 70, measureC: 42, measureD: 48, stock: 4 },
-      { size: "M", measureA: 55, measureB: 72, measureC: 44, measureD: 51, stock: 8 },
-      { size: "L", measureA: 58, measureB: 74, measureC: 46, measureD: 54, stock: 6 },
-      { size: "XL", measureA: 61, measureB: 76, measureC: 48, measureD: 57, stock: 2 },
-      { size: "XXL", measureA: 64, measureB: 78, measureC: 50, measureD: 60, stock: 0 }
+      { size: "S", measureA: 52, measureB: 70, measureC: 42, measureD: 48, stock: 4, recommendedHeight: "Altura 1.65 – 1.74m" },
+      { size: "M", measureA: 55, measureB: 72, measureC: 44, measureD: 51, stock: 8, recommendedHeight: "Altura 1.74 – 1.82m" },
+      { size: "L", measureA: 58, measureB: 74, measureC: 46, measureD: 54, stock: 6, recommendedHeight: "Altura 1.82 – 1.89m" },
+      { size: "XL", measureA: 61, measureB: 76, measureC: 48, measureD: 57, stock: 2, recommendedHeight: "Altura 1.89 – 1.95m" },
+      { size: "XXL", measureA: 64, measureB: 78, measureC: 50, measureD: 60, stock: 0, recommendedHeight: "Altura 1.95m+" }
     ],
     fitNote: "Calce regular estándar. Elegí tu talle habitual para un ajuste limpio.",
     logistics: [
       "Despacho en 24-48hs hábiles a toda la República Argentina.",
       "30 días para cambios sin fricción o costo logístico en primera gestión.",
       "Jersey compactado testeado contra torsión lateral."
+    ],
+    measurementInstructions: [
+      { title: "Superficie Plana", body: "Colocá una remera que te quede cómoda completamente extendida sobre una superficie plana." },
+      { title: "Medición de Ancho", body: "Medí el ancho de pecho 2.5 cm por debajo de la sisa de axila a axila de extremo a extremo." },
+      { title: "Cotejo con la Matriz", body: "Compará tus medidas con la fila de tu talle: el ancho (A) debe quedar al ras del cuerpo y el largo (B) a la altura de la cadera para el calce regular." }
     ],
     terminalPath: "root@devnull:~/store/drop_01/tee $",
     specFile: "cat null_tee.spec",
@@ -260,18 +278,24 @@ export const PRODUCTS: Product[] = [
       { code: "08", label: "MANUFACTURA", value: "Confeccionado éticamente en Buenos Aires, Arg." }
     ],
     sizingColumns: ["CINTURA (A)", "CADERA (B)", "TIRO (C)", "LARGO (D)"],
+    sizingColumnsModal: ["WAIST (A)", "HIP (B)", "RISE (C)", "LENGTH (D)"],
     sizingRows: [
-      { size: "S", measureA: 38, measureB: 50, measureC: 30, measureD: 100, stock: 3 },
-      { size: "M", measureA: 40, measureB: 53, measureC: 31, measureD: 102, stock: 5 },
-      { size: "L", measureA: 42, measureB: 56, measureC: 32, measureD: 104, stock: 5 },
-      { size: "XL", measureA: 44, measureB: 59, measureC: 33, measureD: 106, stock: 2 },
-      { size: "XXL", measureA: 46, measureB: 62, measureC: 34, measureD: 108, stock: 1 }
+      { size: "S", measureA: 38, measureB: 50, measureC: 30, measureD: 100, stock: 3, recommendedHeight: "Altura 1.65 – 1.74m" },
+      { size: "M", measureA: 40, measureB: 53, measureC: 31, measureD: 102, stock: 5, recommendedHeight: "Altura 1.74 – 1.82m" },
+      { size: "L", measureA: 42, measureB: 56, measureC: 32, measureD: 104, stock: 5, recommendedHeight: "Altura 1.82 – 1.89m" },
+      { size: "XL", measureA: 44, measureB: 59, measureC: 33, measureD: 106, stock: 2, recommendedHeight: "Altura 1.89 – 1.95m" },
+      { size: "XXL", measureA: 46, measureB: 62, measureC: 34, measureD: 108, stock: 1, recommendedHeight: "Altura 1.95m+" }
     ],
     fitNote: "Calce ergonómico con ajuste en tobillo. Elegí tu talle habitual.",
     logistics: [
       "Despacho en 24-48hs hábiles a toda la República Argentina.",
       "30 días para cambios sin fricción o costo logístico en primera gestión.",
       "Tejido testado contra abrasión y pérdida de elasticidad."
+    ],
+    measurementInstructions: [
+      { title: "Superficie Plana", body: "Colocá un pantalón que te quede cómodo completamente extendido sobre una superficie plana." },
+      { title: "Medición de Cintura y Cadera", body: "Medí la cintura de extremo a extremo y la cadera a la altura de los bolsillos cargo." },
+      { title: "Cotejo con la Matriz", body: "Compará tus medidas con la fila de tu talle: la cintura (A) debe quedar cómoda y el largo (D) a la altura del tobillo." }
     ],
     terminalPath: "root@devnull:~/store/drop_01/cargo $",
     specFile: "cat cargo_pants.spec",
