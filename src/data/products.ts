@@ -20,12 +20,21 @@ export interface ProductGalleryImage {
   sublabel: string;
 }
 
+/** Etiquetas técnicas que acompañan al visor de galería (una por producto). */
+export interface ProductGalleryMeta {
+  viewportRef: string;
+  color: string;
+  density: string;
+  cut: string;
+}
+
 export interface Product {
   id: string;
   slug: string;
   name: string;
   price: number;
   specTag: string;
+  specId: string;
   shortDescription: string;
   longDescription: string;
   finishTone: {
@@ -35,6 +44,7 @@ export interface Product {
   };
   stockByTalle: Record<string, number>;
   gallery: ProductGalleryImage[];
+  galleryMeta: ProductGalleryMeta;
   specs: ProductSpecRow[];
   sizingColumns: [string, string, string, string];
   sizingRows: SizingRow[];
@@ -58,6 +68,7 @@ export const PRODUCTS: Product[] = [
     name: "Root Hoodie",
     price: 89000,
     specTag: "SPEC // 420_GSM",
+    specId: "01_ROOT_HOODIE",
     shortDescription: "Algodón peinado pesado 420g • Corte boxy oversize • Capucha doble panel con cordones colgantes.",
     longDescription: "Sudadera de especificación pesada con capucha de doble panel estructurada y cordones al tono. Algodón frisado denso de 420 GSM diseñado para conferir geometría estricta, caída recta y aislamiento térmico constante.",
     finishTone: {
@@ -80,6 +91,12 @@ export const PRODUCTS: Product[] = [
         sublabel: "OVERVIEW"
       }
     ],
+    galleryMeta: {
+      viewportRef: "01_ROOT",
+      color: "GRIS MELANGE",
+      density: "420 GSM",
+      cut: "BOX_RELAXED_CUT"
+    },
     specs: [
       { code: "01", label: "COMPOSICIÓN", value: "100% Algodón peinado pesado (Heavyweight)" },
       { code: "02", label: "GRAMAJE", value: "420 GSM (Frisado premium de alta densidad)" },
@@ -119,11 +136,15 @@ export const PRODUCTS: Product[] = [
     outfitIndex: "01 // ROOT"
   },
   {
+    // PLACEHOLDER: Null Tee no tiene boceto propio. Descripción larga, filas de
+    // especificación, medidas por talle, stock y etiquetas de galería son valores
+    // derivados del copy de la home — reemplazar cuando exista el spec real.
     id: "null-tee",
     slug: "null-tee",
     name: "Null Tee",
     price: 48000,
     specTag: "SPEC // 240_GSM",
+    specId: "02_NULL_TEE",
     shortDescription: "Algodón premium 240g • Detalle tipográfico sutil • Cuello cerrado de rib reforzado anti-deformación.",
     longDescription: "Camiseta de especificación técnica en algodón premium de 240 GSM. Diseñada con cuello cerrado de rib reforzado y silueta equilibrada para uso continuo sin pérdida de estructura.",
     finishTone: {
@@ -146,6 +167,12 @@ export const PRODUCTS: Product[] = [
         sublabel: "OVERVIEW"
       }
     ],
+    galleryMeta: {
+      viewportRef: "02_TEE",
+      color: "BLANCO ÓPTICO",
+      density: "240 GSM",
+      cut: "REGULAR_STRAIGHT_CUT"
+    },
     specs: [
       { code: "01", label: "COMPOSICIÓN", value: "100% Algodón premium ring-spun" },
       { code: "02", label: "GRAMAJE", value: "240 GSM (Jersey de alta compactación)" },
@@ -185,11 +212,15 @@ export const PRODUCTS: Product[] = [
     outfitIndex: "02 // TEE"
   },
   {
+    // PLACEHOLDER: Cargo Pants no tiene boceto propio. Descripción larga, filas de
+    // especificación, medidas por talle, stock y etiquetas de galería son valores
+    // derivados del copy de la home — reemplazar cuando exista el spec real.
     id: "cargo-pants",
     slug: "cargo-pants",
     name: "Cargo Pants",
     price: 78000,
     specTag: "SPEC // TECHNICAL_TWILL",
+    specId: "03_CARGO_PANTS",
     shortDescription: "Sarga técnica elastizada • Bolsillos cargo tácticos con fuelle plano • Cintura articulada ergonómica.",
     longDescription: "Pantalón cargo de especificación utilitaria en sarga técnica elastizada. Diseñado con cintura articulada ergonómica y bolsillos tácticos de fuelle plano para máxima funcionalidad en estaciones de trabajo prolongadas.",
     finishTone: {
@@ -212,6 +243,12 @@ export const PRODUCTS: Product[] = [
         sublabel: "OVERVIEW"
       }
     ],
+    galleryMeta: {
+      viewportRef: "03_CARGO",
+      color: "NEGRO TÉCNICO",
+      density: "320 GSM",
+      cut: "ERGONOMIC_TAPERED_CUT"
+    },
     specs: [
       { code: "01", label: "COMPOSICIÓN", value: "98% Algodón, 2% Elastano (Sarga técnica)" },
       { code: "02", label: "GRAMAJE", value: "320 GSM (Tejido denso de alta resistencia)" },

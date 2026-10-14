@@ -28,7 +28,7 @@ export function MaterialSpecsTable({ specs }: { specs: ProductSpecRow[] }) {
           {specs.map((row) => (
             <div key={row.code} className="bg-surface1 p-5 sm:p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
               <span className="font-mono text-xs text-sec tracking-wider shrink-0">
-                {row.code} // {row.label}
+                {`${row.code} // ${row.label}`}
               </span>
               <span className="font-mono text-xs text-text text-right font-medium">
                 {row.value}

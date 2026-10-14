@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Product } from "@/data/products";
 import { recomendarTalle } from "@/lib/fit";
+import { convertMeasure } from "@/lib/units";
 import { SizingDiagram } from "./sizing-diagram";
 
 interface SizingModalProps {
@@ -64,8 +65,6 @@ export function SizingModal({
   const recommendedSize = fitResult.talleRecomendado;
   const recommendedStock = recommendedSize ? product.stockByTalle[recommendedSize] ?? 0 : 0;
   const isRecommendedOutOfStock = recommendedStock === 0;
-
-  const convertVal = (val: number) => (unit === "in" ? (val / 2.54).toFixed(1) : val);
 
   const isBottom = product.id === "cargo-pants";
   const calcHeaderCode = String.fromCharCode(47, 47, 32) + "FIT_CALCULATOR_V1.2";
@@ -215,10 +214,10 @@ export function SizingModal({
                       {row.size}
                       {isSelected && <span className="ml-2 px-1 bg-canvas border border-border text-[9px]">ACTIVE</span>}
                     </td>
-                    <td className="p-4">{convertVal(row.measureA)} {unit}</td>
-                    <td className="p-4">{convertVal(row.measureB)} {unit}</td>
-                    <td className="p-4">{convertVal(row.measureC)} {unit}</td>
-                    <td className="p-4">{convertVal(row.measureD)} {unit}</td>
+                    <td className="p-4">{convertMeasure(row.measureA, unit)} {unit}</td>
+                    <td className="p-4">{convertMeasure(row.measureB, unit)} {unit}</td>
+                    <td className="p-4">{convertMeasure(row.measureC, unit)} {unit}</td>
+                    <td className="p-4">{convertMeasure(row.measureD, unit)} {unit}</td>
                     <td className="p-4 text-text/80">{recs[row.size] || "Altura estándar"}</td>
                     <td className="p-4">{row.stock} disp.</td>
                   </tr>
@@ -296,12 +295,12 @@ export function SizingModal({
           {/* Calculator Output / Error */}
           <div className="pt-4 border-t border-border font-mono text-xs">
             {fitResult.error ? (
-              <p aria-live="polite" className="text-red-400 font-bold">{fitResult.error}</p>
+              <p aria-live="polite" className="text-text font-bold">{fitResult.error}</p>
             ) : recommendedSize ? (
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                 <p aria-live="polite" className="text-text font-bold">
                   {`> CALCE RECOMENDADO: TALLE ${recommendedSize}`}
-                  {isRecommendedOutOfStock && <span className="text-sec font-normal ml-2">// SIN_STOCK en talle {recommendedSize}</span>}
+                  {isRecommendedOutOfStock && <span className="text-sec font-normal ml-2">{`// SIN_STOCK en talle ${recommendedSize}`}</span>}
                 </p>
                 {!isRecommendedOutOfStock && (
                   <button

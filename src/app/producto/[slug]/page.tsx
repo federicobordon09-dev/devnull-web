@@ -10,6 +10,7 @@ import { MaterialSpecsTable } from "@/components/product/material-specs-table";
 import { SizingMatrix } from "@/components/product/sizing-matrix";
 import { StackRecommendation } from "@/components/product/stack-recommendation";
 import { ProductDetailSkeleton } from "@/components/product/product-detail-skeleton";
+import { ProductPageProvider } from "@/context/product-page-context";
 
 interface PageProps {
   params: Promise<{
@@ -56,7 +57,9 @@ export default function ProductDetailPage({ params }: PageProps) {
           Ver: https://nextjs.org/docs/messages/instant-shell-url-data
         */}
         <Suspense fallback={<ProductDetailSkeleton />}>
-          <ProductDetail params={params} />
+          <ProductPageProvider>
+            <ProductDetail params={params} />
+          </ProductPageProvider>
         </Suspense>
       </main>
       <Footer />
@@ -87,7 +90,7 @@ async function ProductDetail({ params }: PageProps) {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
           <div className="lg:col-span-7">
-            <ProductGallery gallery={product.gallery} />
+            <ProductGallery gallery={product.gallery} meta={product.galleryMeta} />
           </div>
           <div className="lg:col-span-5">
             <ProductInfoPanel product={product} />

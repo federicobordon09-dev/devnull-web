@@ -1,4 +1,8 @@
+"use client";
+
 import React from "react";
+import { useProductPage } from "@/context/product-page-context";
+import { convertMeasure, unitLabel } from "@/lib/units";
 
 export function SizingMatrix({
   columns,
@@ -7,6 +11,8 @@ export function SizingMatrix({
   columns: [string, string, string, string];
   rows: Array<{ size: string; measureA: number; measureB: number; measureC: number; measureD: number; stock: number }>;
 }) {
+  const { selectedSize, unit } = useProductPage();
+
   return (
     <section id="sizing-matrix" className="bg-canvas py-12 md:py-20 border-t border-border">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -19,8 +25,9 @@ export function SizingMatrix({
               Dimensiones Corporales & Calce
             </h2>
           </div>
+          {/* El chip refleja la unidad activa del estado compartido de la página */}
           <span className="px-3 py-1 bg-surface1 border border-border font-mono text-xs text-sec">
-            UNIDAD_MEDIDA: CENTÍMETROS (cm)
+            UNIDAD_MEDIDA: {unitLabel(unit)}
           </span>
         </div>
 
@@ -32,7 +39,9 @@ export function SizingMatrix({
           className="border border-border bg-surface1 overflow-x-auto outline-none focus:ring-1 focus:ring-text"
         >
           <table className="w-full text-left font-mono text-xs border-collapse">
-            <caption>Tabla de talles y especificación dimensional en centímetros</caption>
+            <caption>
+              Tabla de talles y especificación dimensional en {unit === "cm" ? "centímetros" : "pulgadas"}
+            </caption>
             <thead>
               <tr className="bg-surface2 border-b border-border text-sec">
                 <th scope="col" className="p-4 uppercase tracking-wider">SIZE_TAB</th>
@@ -45,7 +54,7 @@ export function SizingMatrix({
             </thead>
             <tbody>
               {rows.map((row) => {
-                const isSelected = row.size === "M"; // Synced with default selected size
+                const isSelected = row.size === selectedSize;
                 return (
                   <tr
                     key={row.size}
@@ -61,10 +70,10 @@ export function SizingMatrix({
                         </span>
                       )}
                     </td>
-                    <td className="p-4">{row.measureA} cm</td>
-                    <td className="p-4">{row.measureB} cm</td>
-                    <td className="p-4">{row.measureC} cm</td>
-                    <td className="p-4">{row.measureD} cm</td>
+                    <td className="p-4">{convertMeasure(row.measureA, unit)} {unit}</td>
+                    <td className="p-4">{convertMeasure(row.measureB, unit)} {unit}</td>
+                    <td className="p-4">{convertMeasure(row.measureC, unit)} {unit}</td>
+                    <td className="p-4">{convertMeasure(row.measureD, unit)} {unit}</td>
                     <td className="p-4">{row.stock} disp.</td>
                   </tr>
                 );
